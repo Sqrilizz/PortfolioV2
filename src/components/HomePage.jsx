@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import ProfileCard from './ProfileCard'
 import TerminalCard from './TerminalCard'
 import MusicPlayer from './MusicPlayer'
+import MottoCard from './MottoCard'
 import LanguageSwitcher from './LanguageSwitcher'
 import TypewriterText from './TypewriterText'
 import StarField from './StarField'
@@ -52,6 +53,7 @@ export default function HomePage() {
         <div className="md:col-span-1 flex flex-col gap-6">
           <ProfileCard user={USER} />
           <MusicPlayer />
+          <MottoCard />
         </div>
 
         <div className="md:col-span-2 flex flex-col gap-6">

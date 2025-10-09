@@ -92,25 +92,35 @@ export default function MusicPlayer() {
     <div className="card relative overflow-hidden">
       {/* Фоновое изображение */}
       {currentTrack?.cover && (
-        <div 
-          className="absolute inset-0 bg-cover bg-center opacity-40 blur-sm scale-110 pointer-events-none"
+        <div
+          className="absolute inset-0 bg-cover bg-center opacity-60 pointer-events-none"
           style={{ backgroundImage: `url(${currentTrack.cover})` }}
         />
       )}
       {/* Фоновый градиент */}
       <div className="absolute inset-0 bg-gradient-to-br from-purple-950/60 to-violet-950/60 pointer-events-none" />
       
-      {/* Заголовок */}
-      <div className="relative z-10 flex items-center gap-3 mb-4">
-        <div className={`w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center transition-all duration-300 ${playing ? 'music-glow' : ''}`}>
-          <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
-          </svg>
+      {/* Информация о треке с кнопкой play */}
+      <div className="flex items-center gap-4 mb-4">
+        <div className="flex-1">
+          <h3 className="text-white font-medium text-sm drop-shadow-2xl">{currentTrack?.title || 'No track selected'}</h3>
+          <p className="text-gray-200 text-xs drop-shadow-lg">Now Playing</p>
         </div>
-        <div className="flex-1 min-w-0">
-          <div className="font-semibold text-gray-200 truncate">{currentTrack?.title || 'Unknown Track'}</div>
-          <div className="text-sm text-gray-400">Now Playing</div>
-        </div>
+        {/* Кнопка play/pause */}
+        <button
+          onClick={toggle}
+          className="w-12 h-12 bg-gradient-to-r from-purple-600 to-violet-500 rounded-full flex items-center justify-center hover:from-purple-700 hover:to-violet-600 transition-all duration-300 hover:scale-105 shadow-lg"
+        >
+          {playing ? (
+            <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+            </svg>
+          ) : (
+            <svg className="w-5 h-5 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+          )}
+        </button>
       </div>
 
       {/* Прогресс бар */}
@@ -132,33 +142,18 @@ export default function MusicPlayer() {
         </div>
       </div>
 
-      {/* Управление */}
-      <div className="relative z-10 flex items-center justify-center gap-4">
-        <button 
-          onClick={toggle}
-          className={`w-14 h-14 rounded-full bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200 ${playing ? 'shadow-purple-500/30' : ''}`}
-        >
-          {playing ? (
-            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-            </svg>
-          ) : (
-            <svg className="w-6 h-6 ml-1" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M8 5v14l11-7z"/>
-            </svg>
-          )}
-        </button>
-        
-        {/* Индикатор воспроизведения */}
+      {/* Индикатор воспроизведения */}
+      <div className="relative z-10 flex justify-center mb-4">
         {playing && (
           <div className="flex gap-1 items-end">
             {[...Array(4)].map((_, i) => (
               <div
                 key={i}
-                className="w-1 bg-gradient-to-t from-purple-500 to-violet-400 rounded-full music-equalizer"
+                className="w-0.5 bg-gradient-to-t from-purple-500 to-violet-400 rounded-full music-equalizer"
                 style={{
                   animationDelay: `${i * 0.15}s`,
-                  animationDuration: `${0.6 + i * 0.1}s`
+                  animationDuration: `${0.6 + i * 0.1}s`,
+                  height: `${6 + i * 3}px`
                 }}
               />
             ))}
